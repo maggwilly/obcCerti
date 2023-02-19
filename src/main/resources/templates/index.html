@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h2>Heure de passage</h2>
+    <p>Selectionnez une période de temps  </p>
+    <ul class="nav nav-tabs" >
+        <li th:each="entry, iStat: ${periods}" th:class="${iStat.first}? 'active'">
+            <a data-toggle="tab" th:href="'#' + ${entry.key}"  th:text="${entry.key}">Home</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" >
+        <div th:each="entry,iStat: ${periods}" th:id="${entry.key}"   th:class="'tab-pane fade ' +( ${iStat.first}? 'in active' : '')">
+            <div th:class="'row'">
+                <span th:each="period: ${entry.value}"  th:class="'col'">
+                    <a th:href="${entry.key} + '/' + ${period.key}" th:text="${period.key}">Home</a>
+                </span>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
