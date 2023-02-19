@@ -3,6 +3,7 @@ package org.obc.entity;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,7 +16,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import static org.obc.util.PeriodIdGenerator.ID_GENERATOR;
 
 @Entity
 @Table(name = "PERIOD")
@@ -24,12 +24,8 @@ import static org.obc.util.PeriodIdGenerator.ID_GENERATOR;
 @AllArgsConstructor
 @Builder
 public class Period {
-	@Id
-	@GeneratedValue(generator = "id-generator")
-	@GenericGenerator(name = "id-generator", strategy = ID_GENERATOR)
-	private String id;
-	private LocalDate date;
-	private LocalTime startTime;
+	@EmbeddedId
+	private PeriodId id;
 	private LocalTime endTime;
-	private Integer office;
+
 }

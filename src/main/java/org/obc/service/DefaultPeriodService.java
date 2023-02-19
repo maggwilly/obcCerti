@@ -10,15 +10,14 @@ import java.util.stream.IntStream;
 import javax.transaction.Transactional;
 
 import org.obc.entity.Period;
+import org.obc.entity.PeriodId;
 import org.obc.repository.PeriodRepository;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
-@Scope("protoType")
 @RequiredArgsConstructor
 public class DefaultPeriodService implements PeriodService {
 	private final PeriodRepository repository;
@@ -45,7 +44,8 @@ public class DefaultPeriodService implements PeriodService {
 			final var date = currentStart.toLocalDate();
 			final var endTime = currentEnd.toLocalTime();
 			final var startTime = currentStart.toLocalTime();
-			final var period = Period.builder().date(date).endTime(endTime).startTime(startTime).office(value).build();
+			final var id = PeriodId.builder().startTime(startTime).date(date).office(officeNumber).build();
+			final var period = Period.builder().id(id).endTime(endTime).build();
 			save(period);
 		});
 	}
@@ -58,11 +58,11 @@ public class DefaultPeriodService implements PeriodService {
 
 	@Override
 	public List<Period> findAvailable(LocalDate date) {
-		return repository.findAllByDateBefore(date);
+		return repository.findAllByIdDateBefore(date);
 	}
 
 	@Override
 	public Optional<Period> findLast() {
-		return repository.findTop1ByOrderByDateDescEndTimeDesc().stream().findAny();
+		return repository.findTop1ByOrderByIdDateDescEndTimeDesc().stream().findAny();
 	}
 }

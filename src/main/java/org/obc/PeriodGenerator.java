@@ -49,6 +49,6 @@ public class PeriodGenerator {
 	}
 
 	private static LocalDateTime getLocalDateTime(Period period) {
-		return period.getDate().atTime(period.getEndTime()).plusDays(1);
+		return period.getId().getDate().atTime(period.getEndTime()).plusDays(1);
 	}
 }

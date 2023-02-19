@@ -21,7 +21,7 @@ public class HomeController {
 	public String index(Model model) {
 		final var localDate = LocalDateTime.now().plus(duration);
 		final var periods = periodService.findAvailable(localDate.toLocalDate());
-		final var localTimeMap = periods.stream().collect(groupingBy(Period::getDate,groupingBy(Period::getStartTime)));
+		final var localTimeMap = periods.stream().collect(groupingBy(o -> o.getId().getDate(),groupingBy(period -> period.getId().getStartTime())));
 		model.addAttribute("periods", localTimeMap);
 		return "index";
 	}
