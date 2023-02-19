@@ -1,10 +1,13 @@
 package org.obc.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,11 +22,13 @@ import lombok.NoArgsConstructor;
 @Table(name = "RESERVATION")
 public class Reservation {
 	@Id
-	@GeneratedValue
-	private Long id;
+	@GeneratedValue(generator="system-uuid")
+	@GenericGenerator(name="system-uuid", strategy = "uuid")
+	private String id;
 	@OneToOne
 	private Period period;
-	@OneToOne
+
+	 @OneToOne(cascade = CascadeType.ALL)
      private Candidate candidate;
      private Integer registrationNumber;
 	 private Status status;

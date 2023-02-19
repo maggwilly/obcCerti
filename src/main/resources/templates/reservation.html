@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"/>
+    <title>Votre rendez-vous</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container-fluid">
+    <div class="my-3">
+        <div style="max-width: 90%; margin: 0 auto">
+        <h3 class="text-center">
+            <span>Rendez-vous N° </span>
+            <span th:text="${#numbers.formatInteger(reservation.registrationNumber,5)}"></span>
+        </h3>
+        <h4 class="text-center">
+            Le <span th:text="${reservation.period.id.date}"> </span>
+             <span th:text="${reservation.period.id.startTime}"></span>
+        </h4>
+        <table style="max-width: 90%; margin: 0 auto">
+            <tr>
+                <td>Nom</td>
+                <td th:text="${reservation.candidate.name}"/>
+            </tr>
+            <tr>
+                <td>Prénom</td>
+                <td th:text="${reservation.candidate.surname}"/>
+            </tr>
+            <tr>
+                <td>Session</td>
+                <td th:text="${reservation.candidate.sessionName}"/>
+            </tr>
+            <tr>
+                <td>Spécialité</td>
+                <td th:text="${reservation.candidate.branch}"/>
+            </tr>
+            <tr>
+                <td>Sous-centre</td>
+                <td th:text="${reservation.candidate.centre}"/>
+            </tr>
+            <tr>
+                <td>Télephone</td>
+                <td th:text="${reservation.candidate.id.phone}"/>
+            </tr>
+            <tr>
+                <td>Statut</td>
+                <td th:text="${reservation.status}"/>
+            </tr>
+
+        </table>
+        </div>
+        <div class="row text-center">
+            <a th:href="'#'" th:text="Annuler" class="btn btn-primary btn-sm mr-2"></a>
+            <input type="button" value="Accueil" id="btnAccueil" class="btn btn-secondary btn-sm"/>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		$("#btnAccueil").on("click", function () {
+			window.location = "[[@{/}]]";
+		});
+	});
+</script>
+
+</body>
+
+</html>

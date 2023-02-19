@@ -7,6 +7,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -27,5 +28,6 @@ public class Period {
 	@EmbeddedId
 	private PeriodId id;
 	private LocalTime endTime;
-
+	@OneToOne(mappedBy = "period" )
+	private Reservation reservation;
 }

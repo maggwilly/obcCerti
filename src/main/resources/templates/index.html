@@ -1,35 +1,40 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Bootstrap Example</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
 
-<div class="container">
-    <h2>Heure de passage</h2>
-    <p>Selectionnez une période de temps  </p>
-    <ul class="nav nav-tabs" >
-        <li th:each="entry, iStat: ${periods}" th:class="${iStat.first}? 'active'">
-            <a data-toggle="tab" th:href="'#' + ${entry.key}"  th:text="${entry.key}">Home</a>
-        </li>
-    </ul>
+<div class="container-fluid">
+    <div class="my-3">
+        <div style="max-width: 90%; margin: 0 auto">
+            <h3>Heure de passage</h3>
+            <p>Selectionnez une période de temps </p>
+            <ul class="nav nav-tabs">
+                <li th:each="entry, iStat: ${periods}" th:class="${iStat.first}? 'active'">
+                    <a data-toggle="tab"  th:href="'#' + ${entry.key}" th:text="${entry.key}">Home</a>
+                </li>
+            </ul>
 
-    <div class="tab-content" >
-        <div th:each="entry,iStat: ${periods}" th:id="${entry.key}"   th:class="'tab-pane fade ' +( ${iStat.first}? 'in active' : '')">
-            <div th:class="'row'">
-                <span th:each="period: ${entry.value}"  th:class="'col'">
-                    <a th:href="${entry.key} + '/' + ${period.key}" th:text="${period.key}">Home</a>
+            <div class="tab-content">
+                <div th:each="entry,iStat: ${periods}" th:id="${entry.key}" th:class="'tab-pane fade ' +( ${iStat.first}? 'in active' : '')">
+                    <div th:class="'row'">
+                <span th:each="period: ${entry.value}" th:class="'col'">
+                    <a class="btn btn-outline-info btn-sm mr-2" th:href="@{/schedule/{date}/{startTime}(date=${entry.key},startTime=${period.key})}" th:text="${period.key}">Home</a>
                 </span>
+                    </div>
+                </div>
             </div>
-
         </div>
     </div>
 </div>
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

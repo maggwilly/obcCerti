@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0"/>
+    <title>Saisir les informations</title>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container-fluid">
+    <div class="my-3">
+        <div style="max-width: 550px; margin: 0 auto">
+            <h3>Rendez-vous du
+                 <span th:text="${reservation.period.id.date}"></span>
+                 <span th:text="${reservation.period.id.startTime}"></span>
+            </h3>
+        <form th:action="@{/schedule}" method="post" enctype="multipart/form-data" th:object="${reservation}">
+            <input type="hidden" th:field="*{period.id.startTime}"/>
+            <input type="hidden" th:field="*{period.id.date}"/>
+            <input type="hidden" th:field="*{period.id.office}"/>
+
+            <div class="p-3">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="title">Nom</label>
+                    <p th:if="${#fields.hasErrors('candidate.name')}" th:errorclass="error" th:errors="*{candidate.name}"></p>
+                    <div class="col-sm-9">
+                        <input type="text" th:field="*{candidate.name}" required minlength="2" maxlength="128" class="form-control"
+                               id="title"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="description">Prénom</label>
+                    <p th:if="${#fields.hasErrors('candidate.surname')}" th:errorclass="error" th:errors="*{candidate.surname}"></p>
+                    <div class="col-sm-9">
+                        <input type="text" th:field="*{candidate.surname}" minlength="2" maxlength="256" class="form-control"
+                               id="description"/>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="level">Adresse mail</label>
+                    <div class="col-sm-9">
+                        <input type="email" step="1" th:field="*{candidate.email}" required min="1"
+                               class="form-control" id="level"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="level">Numero de Télephone</label>
+                    <p th:if="${#fields.hasErrors('candidate.id.phone')}" th:errorclass="error" th:errors="*{candidate.id.phone}"></p>
+                    <div class="col-sm-9">
+                        <input type="text" step="1" th:field="*{candidate.id.phone}" required min="1"
+                               class="form-control" id="phone"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="level">Spécialité</label>
+                    <p th:if="${#fields.hasErrors('candidate.branch')}" th:errorclass="error" th:errors="*{candidate.branch}"></p>
+                    <div class="col-sm-9">
+                        <input type="text" step="1" th:field="*{candidate.branch}" required min="1"
+                               class="form-control" id="branch"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="level">Sous centre</label>
+                    <p th:if="${#fields.hasErrors('candidate.centre')}" th:errorclass="error" th:errors="*{candidate.centre}"></p>
+
+                    <div class="col-sm-9">
+                        <input type="text" step="1" th:field="*{candidate.centre}" required min="1"
+                               class="form-control" id="centre"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label" for="level">Session</label>
+                    <p th:if="${#fields.hasErrors('candidate.sessionName')}" th:errorclass="error" th:errors="*{candidate.sessionName}"></p>
+
+                    <div class="col-sm-9">
+                        <input type="text" step="1" th:field="*{candidate.sessionName}" required min="1"
+                               class="form-control" id="sessionName"/>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <input type="submit" value="Save" class="btn btn-primary btn-sm mr-2"/>
+                    <input type="button" value="Cancel" id="btnCancel" class="btn btn-secondary btn-sm"/>
+                </div>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		$("#btnCancel").on("click", function () {
+			window.location = "[[@{/}]]";
+		});
+	});
+</script>
+
+</body>
+
+</html>
