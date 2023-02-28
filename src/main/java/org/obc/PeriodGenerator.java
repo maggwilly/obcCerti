@@ -35,7 +35,7 @@ public class PeriodGenerator {
 
 	private
 	//@Scheduled(cron = "${period.rate.cron.expression}")
-	@Scheduled(fixedRate = 5000)
+	 @Scheduled(fixedRate = 24*60*60000)
 	void generatePeriods() {
 		final var startDate = periodService.findLast().map(PeriodGenerator::getLocalDateTime).orElse(LocalDateTime.now());
 		final var endDate = startDate.plus(duration);
